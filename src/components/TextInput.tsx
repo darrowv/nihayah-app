@@ -38,6 +38,7 @@ export const TextInput = forwardRef<DefaultTextInput, TextInputProps>(
             }),
           },
         ]}
+        placeholderTextColor={placeholderTextColor || "#9ca3af"}
       />
     );
   }

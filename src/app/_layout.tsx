@@ -10,6 +10,7 @@ import {
   NotoSansArabic_500Medium,
   NotoSansArabic_600SemiBold,
 } from "@expo-google-fonts/noto-sans-arabic";
+import { SQLiteProvider } from "expo-sqlite";
 
 export default function Layout() {
   let [fontLoaded, fontError] = useFonts({
@@ -34,7 +35,12 @@ export default function Layout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#90343d" }}>
       <StatusBar backgroundColor="#90343d" barStyle="light-content" />
-      <Slot />
+      <SQLiteProvider
+        databaseName="dictionary.db"
+        assetSource={{ assetId: require("../../assets/dictionary.db") }}
+      >
+        <Slot />
+      </SQLiteProvider>
     </SafeAreaView>
   );
 }
