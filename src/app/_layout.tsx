@@ -36,8 +36,8 @@ export default function Layout() {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#90343d" }}>
       <StatusBar backgroundColor="#90343d" barStyle="light-content" />
       <SQLiteProvider
-        databaseName="dictionary.db"
-        assetSource={{ assetId: require("../../assets/dictionary.db") }}
+        databaseName="nihayah.db"
+        assetSource={{ assetId: require("../../assets/nihayah.db") }}
       >
         <Slot />
       </SQLiteProvider>

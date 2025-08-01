@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import {
   TextInput as DefaultTextInput,
   Platform,
@@ -10,23 +10,11 @@ export const TextInput = forwardRef<DefaultTextInput, TextInputProps>(
     { placeholderTextColor, ...props },
     ref: ForwardedRef<DefaultTextInput>
   ) {
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-      setIsFocused(true);
-    };
-
-    const handleEndEditing = () => {
-      setIsFocused(false);
-    };
-
     return (
       <DefaultTextInput
         {...props}
         ref={ref}
-        onFocus={handleFocus}
-        onEndEditing={handleEndEditing}
-        className={`h-14 rounded-xl border border-[#302c21] bg-white px-3 py-1 text-right ${isFocused ? "border-[#f5de8e]" : ""} ${props.className || ""}`}
+        className={`h-14 rounded-xl bg-white px-3 py-1 text-right ${props.className || ""}`}
         style={[
           props.style,
           {
