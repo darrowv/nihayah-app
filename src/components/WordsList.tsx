@@ -10,6 +10,7 @@ import { Text } from "./shared/Text";
 import { Icon } from "./shared/Icon";
 import WordModal from "./WordModal";
 import Loader from "./shared/Loader";
+import Separator from "./shared/Separator";
 
 function WordsList() {
   let repo = useDatabaseRepo();
@@ -39,20 +40,21 @@ function WordsList() {
   return (
     <FlatList
       data={dictEntries}
+      ItemSeparatorComponent={Separator}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => setSelectedEntry(item)}
-          className="flex-row items-center justify-between border-b border-gray-300 px-4 py-4"
+          className="flex-row-reverse items-center justify-between px-4 py-4"
         >
           <Icon
             type="MaterialIcons"
             name="chevron-left"
-            size={24}
+            size={26}
             color="#99a1af"
           />
-          <View className="flex-1 gap-1">
+          <View className="me-4 flex-1 gap-2">
             <Text className="text-xl text-gray-600">{item.word}</Text>
-            <Text className="ml-5 line-clamp-1 text-base text-gray-400">
+            <Text className="line-clamp-1 text-base text-gray-400">
               {item.explanation}
             </Text>
           </View>

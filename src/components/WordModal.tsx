@@ -15,7 +15,7 @@ function WordModal({ close, entry }: WordModalProps) {
   return (
     <Modal onRequestClose={close}>
       <View className="bg-brand px-5 py-4">
-        <TouchableOpacity onPress={close}>
+        <TouchableOpacity onPress={close} className="items-end">
           <Icon
             type="MaterialIcons"
             name="arrow-back"

@@ -31,10 +31,7 @@ export const Text = ({
 
   return (
     <DefaultText
-      style={[
-        { fontFamily, writingDirection: "rtl", textAlign: "right" },
-        style,
-      ]}
+      style={[{ fontFamily, writingDirection: "rtl" }, style]}
       {...props}
     >
       {children}

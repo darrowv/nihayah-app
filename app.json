@@ -13,7 +13,8 @@
           "origin": "https://n"
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-localization"
     ],
     "name": "nihayah-app",
     "slug": "nihayah-app",
@@ -23,7 +24,9 @@
       },
       "eas": {
         "projectId": "c8e6e868-4ab5-4620-8923-1f806b850dc4"
-      }
+      },
+      "supportsRtl": true,
+      "forcesRtl": true
     },
     "android": {
       "package": "com.nasyr.nihayahapp"

@@ -26,10 +26,10 @@ function SearchArea() {
           name="search"
           size={24}
           color="#4a5565"
-          className="absolute left-7 top-1/2 z-10 -translate-y-1/2"
+          className="absolute end-7 top-1/2 z-10 -translate-y-1/2"
         />
         <TextInput
-          className="mx-4 my-1 pl-10 text-xl"
+          className="mx-4 my-1 ps-12 text-xl"
           placeholder="ابدأ بكتابة الكلمة"
           autoFocus
           maxLength={30}
