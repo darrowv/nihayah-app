@@ -12,3 +12,4 @@ Features:
 
 - History of viewed entries
 - Favorites
+- Footnotes

@@ -1,8 +1,9 @@
-import { I18nManager, StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import { Slot } from "expo-router";
+import { SQLiteProvider } from "expo-sqlite";
 import "../global.css";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useEffect } from "react";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { Suspense, useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -10,7 +11,8 @@ import {
   NotoSansArabic_500Medium,
   NotoSansArabic_600SemiBold,
 } from "@expo-google-fonts/noto-sans-arabic";
-import { SQLiteProvider } from "expo-sqlite";
+
+import Loader from "@/components/shared/Loader";
 
 export default function Layout() {
   let [fontLoaded, fontError] = useFonts({
@@ -29,18 +31,26 @@ export default function Layout() {
     return null;
   }
 
-  I18nManager.allowRTL(true);
-  I18nManager.forceRTL(true);
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#90343d" }}>
-      <StatusBar backgroundColor="#90343d" barStyle="light-content" />
-      <SQLiteProvider
-        databaseName="nihayah.db"
-        assetSource={{ assetId: require("../../assets/nihayah.db") }}
-      >
-        <Slot />
-      </SQLiteProvider>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#90343d" }}>
+        <StatusBar backgroundColor="#90343d" barStyle="light-content" />
+        <Suspense
+          fallback={
+            <View className="flex-1 items-center justify-center bg-white">
+              <Loader size="large" />
+            </View>
+          }
+        >
+          <SQLiteProvider
+            databaseName="nihayah.db"
+            assetSource={{ assetId: require("../../assets/nihayah.db") }}
+            useSuspense
+          >
+            <Slot />
+          </SQLiteProvider>
+        </Suspense>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }

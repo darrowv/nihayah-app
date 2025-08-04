@@ -16,6 +16,18 @@
       "expo-sqlite"
     ],
     "name": "nihayah-app",
-    "slug": "nihayah-app"
+    "slug": "nihayah-app",
+    "extra": {
+      "router": {
+        "origin": "https://n"
+      },
+      "eas": {
+        "projectId": "c8e6e868-4ab5-4620-8923-1f806b850dc4"
+      }
+    },
+    "android": {
+      "package": "com.nasyr.nihayahapp"
+    },
+    "owner": "nasyr"
   }
 }

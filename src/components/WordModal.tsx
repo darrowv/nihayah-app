@@ -1,10 +1,10 @@
 import { Modal, ScrollView, TouchableOpacity, View } from "react-native";
 
-import { IDictionaryEntry } from "@/lib/interfaces/entry.interface";
+import { IDictionaryEntry } from "@/lib/interfaces";
 
-import { Text } from "../Text";
-import { Icon } from "../Icon";
-import Separator from "../Separator";
+import { Text } from "./shared/Text";
+import { Icon } from "./shared/Icon";
+import Separator from "./shared/Separator";
 
 interface WordModalProps {
   entry: IDictionaryEntry;
@@ -14,7 +14,7 @@ interface WordModalProps {
 function WordModal({ close, entry }: WordModalProps) {
   return (
     <Modal onRequestClose={close}>
-      <View className="bg-[#90343d] px-5 py-4">
+      <View className="bg-brand px-5 py-4">
         <TouchableOpacity onPress={close}>
           <Icon
             type="MaterialIcons"

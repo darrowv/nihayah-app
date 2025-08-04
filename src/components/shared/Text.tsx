@@ -10,7 +10,7 @@ export const Text = ({
   weight = "regular",
   ...props
 }: CustomTextProps) => {
-  let fontFamily;
+  let fontFamily: string;
 
   if (weight === "regular") {
     fontFamily = Platform.select({
