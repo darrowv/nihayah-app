@@ -4,6 +4,6 @@ import { useSQLiteContext } from "expo-sqlite";
 import { DatabaseRepository } from "../DatabaseRepository";
 
 export const useDatabaseRepo = () => {
-  const db = useSQLiteContext();
+  let db = useSQLiteContext();
   return useMemo(() => new DatabaseRepository(db), [db]);
 };

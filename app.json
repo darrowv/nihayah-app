@@ -2,7 +2,9 @@
   "expo": {
     "scheme": "acme",
     "userInterfaceStyle": "automatic",
-    "orientation": "default",
+    "orientation": "portrait",
+    "locale": "ar",
+    "icon": "./assets/images/icon.png",
     "web": {
       "output": "static"
     },
@@ -16,7 +18,7 @@
       "expo-sqlite",
       "expo-localization"
     ],
-    "name": "nihayah-app",
+    "name": "النهاية",
     "slug": "nihayah-app",
     "extra": {
       "router": {

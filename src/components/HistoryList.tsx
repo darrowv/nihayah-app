@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { IDictionaryEntry } from "@/lib/interfaces";
-import { dictionaryEntriesAtom } from "@/lib/atoms";
+import { historyEntriesAtom } from "@/lib/atoms";
 
 import { Text } from "./shared/Text";
 import { Icon } from "./shared/Icon";
@@ -12,9 +12,9 @@ import WordModal from "./WordModal";
 import Loader from "./shared/Loader";
 import Separator from "./shared/Separator";
 
-function WordsList() {
+function HistoryList() {
   let repo = useDatabaseRepo();
-  let [dictEntries, setDictEntries] = useAtom(dictionaryEntriesAtom);
+  let [historyEntries, setHistoryEntries] = useAtom(historyEntriesAtom);
   let [loading, setLoading] = useState(false);
   let [selectedEntry, setSelectedEntry] = useState<IDictionaryEntry | null>(
     null
@@ -24,10 +24,10 @@ function WordsList() {
     setLoading(true);
 
     repo
-      .getAllEntries()
-      .then(setDictEntries)
+      .getDictEntriesFromHistory()
+      .then(setHistoryEntries)
       .finally(() => setLoading(false));
-  }, [repo, setDictEntries]);
+  }, [repo, setHistoryEntries]);
 
   if (loading) return <Loader size="medium" />;
 
@@ -39,12 +39,19 @@ function WordsList() {
 
   return (
     <FlatList
-      data={dictEntries}
-      ItemSeparatorComponent={Separator}
+      data={historyEntries}
+      ListHeaderComponent={
+        <View>
+          <Text className="px-4 py-3 text-lg text-gray-400">
+            تاريخ الكلمات التي تمت مشاهدتها
+          </Text>
+          <Separator />
+        </View>
+      }
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => setSelectedEntry(item)}
-          className="flex-row-reverse items-center justify-between px-4 py-4"
+          className="flex-row-reverse items-center justify-between border-b border-b-gray-300 px-4 py-4"
         >
           <Icon
             type="MaterialIcons"
@@ -64,4 +71,4 @@ function WordsList() {
   );
 }
 
-export default WordsList;
+export default HistoryList;

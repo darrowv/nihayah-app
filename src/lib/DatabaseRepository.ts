@@ -1,18 +1,12 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-import { IDictionaryEntry } from "./interfaces";
+import { IDictionaryEntry, IHistoryEntry } from "./interfaces";
 import { normalizeArabic } from "./utils/normalizeArabic";
 
 export class DatabaseRepository {
   constructor(private db: SQLiteDatabase) {}
 
-  async getAllEntries() {
-    let entries = await this.db.getAllAsync("SELECT * FROM dictionary_entries");
-
-    return entries as IDictionaryEntry[];
-  }
-
-  async searchEntries(searchTerm: string) {
+  async searchDictEntries(searchTerm: string) {
     let normalizedSearchTerm = normalizeArabic(searchTerm);
     let value = `%${normalizedSearchTerm}%`;
 
@@ -41,5 +35,41 @@ export class DatabaseRepository {
     );
 
     return filteredEntries as IDictionaryEntry[];
+  }
+
+  async addEntryToHistory(entryId: number) {
+    await this.db.runAsync(
+      `
+      INSERT INTO history (entry_id, viewed_at)
+      VALUES (?, CURRENT_TIMESTAMP)
+      ON CONFLICT(entry_id) DO UPDATE SET viewed_at = CURRENT_TIMESTAMP;
+      `,
+      entryId
+    );
+
+    // Delete oldest entries, keeping only 50 most recent ones
+    await this.db.runAsync(
+      `
+      DELETE FROM history
+      WHERE id NOT IN (
+        SELECT id FROM history
+        ORDER BY viewed_at DESC
+        LIMIT 50
+      );
+      `
+    );
+  }
+
+  async getDictEntriesFromHistory() {
+    const entries = await this.db.getAllAsync(
+      `
+      SELECT de.*, h.viewed_at
+      FROM history h
+      JOIN dictionary_entries de ON de.id = h.entry_id
+      ORDER BY h.viewed_at DESC
+      `
+    );
+
+    return entries as IHistoryEntry[];
   }
 }

@@ -1,5 +1,5 @@
-import { StatusBar, View } from "react-native";
-import { Slot } from "expo-router";
+import { DevSettings, I18nManager, StatusBar, View } from "react-native";
+import { Stack } from "expo-router";
 import { SQLiteProvider } from "expo-sqlite";
 import "../global.css";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -13,6 +13,7 @@ import {
 } from "@expo-google-fonts/noto-sans-arabic";
 
 import Loader from "@/components/shared/Loader";
+import SearchArea from "@/components/SearchArea";
 
 export default function Layout() {
   let [fontLoaded, fontError] = useFonts({
@@ -24,6 +25,16 @@ export default function Layout() {
   useEffect(() => {
     if (fontLoaded || fontError) {
       SplashScreen.hideAsync();
+    }
+
+    if (!I18nManager.isRTL) {
+      I18nManager.allowRTL(true);
+      I18nManager.forceRTL(true);
+
+      // DEV ONLY — force reload after RTL is changed
+      if (__DEV__) {
+        DevSettings.reload();
+      }
     }
   }, [fontLoaded, fontError]);
 
@@ -47,7 +58,11 @@ export default function Layout() {
             assetSource={{ assetId: require("../../assets/nihayah.db") }}
             useSuspense
           >
-            <Slot />
+            <SearchArea />
+            <Stack screenOptions={{ headerShown: false, animation: "none" }}>
+              <Stack.Screen name="index" />
+              <Stack.Screen name="results" />
+            </Stack>
           </SQLiteProvider>
         </Suspense>
       </SafeAreaView>
