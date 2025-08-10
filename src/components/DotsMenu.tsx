@@ -1,13 +1,15 @@
 import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 
-type DotsMenuProps = {
+import Icon from "./shared/Icon";
+
+interface DotsMenuProps {
   visible: boolean;
   onClose: () => void;
   onOptionPress: (option: string) => void;
   position?: { x: number; y: number };
-};
+}
 
-export default function DotsMenu({
+function DotsMenu({
   visible,
   onClose,
   onOptionPress,
@@ -26,21 +28,24 @@ export default function DotsMenu({
           style={{ top: position.y, right: position.x }}
         >
           <Pressable
-            className="border-b border-b-gray-200 py-1 pe-14 ps-4"
+            className="flex-row items-center gap-2 border-b border-b-gray-200 py-1 pe-14 ps-4"
             onPress={() => onOptionPress("history")}
           >
+            <Icon type="MaterialIcons" name="history" size={18} />
             <Text className="text-xl text-gray-800">السجل</Text>
           </Pressable>
           <Pressable
-            className="border-b border-b-gray-200 py-1 pe-14 ps-4"
+            className="flex-row items-center gap-2 border-b border-b-gray-200 py-1 pe-14 ps-4"
             onPress={() => onOptionPress("favorites")}
           >
+            <Icon type="MaterialIcons" name="star-border" size={18} />
             <Text className="text-xl text-gray-800">المفضلة</Text>
           </Pressable>
           <Pressable
-            className="py-1 pe-14 ps-4"
+            className="flex-row items-center gap-2 py-1 pe-14 ps-4"
             onPress={() => onOptionPress("about")}
           >
+            <Icon type="MaterialIcons" name="info-outline" size={18} />
             <Text className="text-xl text-gray-800">حول التطبيق</Text>
           </Pressable>
         </View>
@@ -48,3 +53,5 @@ export default function DotsMenu({
     </Modal>
   );
 }
+
+export default DotsMenu;

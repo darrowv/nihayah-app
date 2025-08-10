@@ -1,32 +1,53 @@
-import { useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
-import { useAtomValue } from "jotai";
+import { useEffect, useState } from "react";
+import { FlatList, View } from "react-native";
+import { useAtom } from "jotai";
+import { useLocalSearchParams } from "expo-router";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { IDictionaryEntry } from "@/lib/interfaces";
 import { searchResultsAtom } from "@/lib/atoms";
 
-import { Text } from "./shared/Text";
-import { Icon } from "./shared/Icon";
+import Text from "./shared/Text";
 import WordModal from "./WordModal";
 import Separator from "./shared/Separator";
+import ResultsListItem from "./ResultsListItem";
+import Loader from "./shared/Loader";
 
 function ResultsList() {
   let repo = useDatabaseRepo();
-  let searchedEntries = useAtomValue(searchResultsAtom);
+  let [searchResults, setSearchResults] = useAtom(searchResultsAtom);
+
   let [selectedEntry, setSelectedEntry] = useState<IDictionaryEntry | null>(
     null
   );
+  let [loadingResults, setLoadingResults] = useState(false);
+
+  let params = useLocalSearchParams<{ searchTerm: string }>();
+  let { searchTerm } = params;
+
+  useEffect(() => {
+    setLoadingResults(true);
+    repo.searchDictEntries(searchTerm).then((results) => {
+      setSearchResults(results);
+      setLoadingResults(false);
+    });
+  }, [searchTerm, repo, setSearchResults]);
+
+  if (loadingResults) return <Loader size="medium" />;
 
   if (selectedEntry) {
     return (
-      <WordModal close={() => setSelectedEntry(null)} entry={selectedEntry} />
+      <WordModal
+        close={() => setSelectedEntry(null)}
+        searchTerm={searchTerm}
+        entry={selectedEntry}
+      />
     );
   }
 
   return (
     <FlatList
-      data={searchedEntries}
+      data={searchResults}
       ListHeaderComponent={
         <View>
           <Text className="px-4 py-3 text-lg text-gray-400">نتائج البحث</Text>
@@ -34,26 +55,13 @@ function ResultsList() {
         </View>
       }
       renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
+        <ResultsListItem
+          entry={item}
+          handlePress={() => {
             repo.addEntryToHistory(item.id);
             setSelectedEntry(item);
           }}
-          className="flex-row-reverse items-center justify-between border-b border-b-gray-300 px-4 py-4"
-        >
-          <Icon
-            type="MaterialIcons"
-            name="chevron-left"
-            size={26}
-            color="#99a1af"
-          />
-          <View className="me-4 flex-1 gap-2">
-            <Text className="text-xl text-gray-600">{item.word}</Text>
-            <Text className="line-clamp-1 text-base text-gray-400">
-              {item.explanation}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        />
       )}
     />
   );

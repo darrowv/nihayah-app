@@ -41,7 +41,7 @@ export type IconProps = {
   className?: string;
 };
 
-export const Icon = ({ type, name, size, color, className }: IconProps) => {
+function Icon({ type, name, size, color, className }: IconProps) {
   if (type === "AntDesign") {
     return (
       <AntDesign
@@ -208,4 +208,6 @@ export const Icon = ({ type, name, size, color, className }: IconProps) => {
   }
 
   return null;
-};
+}
+
+export default Icon;

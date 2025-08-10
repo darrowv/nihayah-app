@@ -4,12 +4,12 @@ export interface CustomTextProps extends TextProps {
   weight?: "regular" | "medium" | "semibold";
 }
 
-export const Text = ({
+function Text({
   children,
   style,
   weight = "regular",
   ...props
-}: CustomTextProps) => {
+}: CustomTextProps) {
   let fontFamily: string;
 
   if (weight === "regular") {
@@ -37,4 +37,6 @@ export const Text = ({
       {children}
     </DefaultText>
   );
-};
+}
+
+export default Text;

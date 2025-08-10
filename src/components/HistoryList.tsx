@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { useAtom } from "jotai";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { IDictionaryEntry } from "@/lib/interfaces";
 import { historyEntriesAtom } from "@/lib/atoms";
 
-import { Text } from "./shared/Text";
-import { Icon } from "./shared/Icon";
+import Text from "./shared/Text";
 import WordModal from "./WordModal";
 import Loader from "./shared/Loader";
 import Separator from "./shared/Separator";
+import HistoryListItem from "./HistoryListItem";
 
 function HistoryList() {
   let repo = useDatabaseRepo();
@@ -49,23 +49,10 @@ function HistoryList() {
         </View>
       }
       renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => setSelectedEntry(item)}
-          className="flex-row-reverse items-center justify-between border-b border-b-gray-300 px-4 py-4"
-        >
-          <Icon
-            type="MaterialIcons"
-            name="chevron-left"
-            size={26}
-            color="#99a1af"
-          />
-          <View className="me-4 flex-1 gap-2">
-            <Text className="text-xl text-gray-600">{item.word}</Text>
-            <Text className="line-clamp-1 text-base text-gray-400">
-              {item.explanation}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <HistoryListItem
+          entry={item}
+          handlePress={() => setSelectedEntry(item)}
+        />
       )}
     />
   );
