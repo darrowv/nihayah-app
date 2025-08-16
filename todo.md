@@ -8,10 +8,10 @@ Features:
 [ ] Implement smart search that considers arabic diacritics and other edge cases
 [ ] Separate dict entries found using word from entries found using explanation
 [+] Implement history of viewed entries
-[ ] Highlight searched terms in dict entries
+[+] Implement favorite entries feature
+[+] Highlight searched terms in dict entries
 
 ## To consider in future:
 
-- Favorites
 - Footnotes
 - Dark mode

@@ -1,7 +1,8 @@
+import "../global.css";
+
 import { DevSettings, I18nManager, StatusBar, View } from "react-native";
 import { Stack } from "expo-router";
 import { SQLiteProvider } from "expo-sqlite";
-import "../global.css";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Suspense, useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -59,8 +60,11 @@ export default function Layout() {
             useSuspense
           >
             <SearchArea />
+
             <Stack screenOptions={{ headerShown: false, animation: "none" }}>
               <Stack.Screen name="index" />
+              <Stack.Screen name="history" />
+              <Stack.Screen name="favorites" />
               <Stack.Screen name="results" />
             </Stack>
           </SQLiteProvider>

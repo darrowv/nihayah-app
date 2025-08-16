@@ -7,11 +7,11 @@ import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { IDictionaryEntry } from "@/lib/interfaces";
 import { searchResultsAtom } from "@/lib/atoms";
 
-import Text from "./shared/Text";
-import WordModal from "./WordModal";
-import Separator from "./shared/Separator";
+import Text from "../shared/Text";
+import WordModal from "../WordModal";
 import ResultsListItem from "./ResultsListItem";
-import Loader from "./shared/Loader";
+import Loader from "../shared/Loader";
+import EmptyList from "../EmptyList";
 
 function ResultsList() {
   let repo = useDatabaseRepo();
@@ -48,10 +48,14 @@ function ResultsList() {
   return (
     <FlatList
       data={searchResults}
+      ListEmptyComponent={
+        <EmptyList text="لم يتم العثور على كلمات مطابقة لبحثك" />
+      }
       ListHeaderComponent={
         <View>
-          <Text className="px-4 py-3 text-lg text-gray-400">نتائج البحث</Text>
-          <Separator />
+          <Text className="mt-4 p-4 text-xl text-gray-500">
+            نتائج البحث : {searchResults.length}
+          </Text>
         </View>
       }
       renderItem={({ item }) => (

@@ -10,7 +10,6 @@ interface HighlightedTextProps {
 }
 
 const ZWJ = "\u200D";
-const ZWNJ = "\u200C";
 
 // Common Arabic diacritics ranges (covers typical harakat + many combining marks)
 const DIACRITICS_REGEX = /[\u0610-\u061A\u064B-\u065F\u06D6-\u06ED]/g;

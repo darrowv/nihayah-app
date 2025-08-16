@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import { Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import { useSetAtom } from "jotai";
 
 import { IDictionaryEntry } from "@/lib/interfaces";
+import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
+import { removeFromFavoriteEntriesAtom } from "@/lib/atoms";
 
 import Text from "./shared/Text";
 import Icon from "./shared/Icon";
 import Separator from "./shared/Separator";
 import HighlightedText from "./shared/HighlightedText";
+import Loader from "./shared/Loader";
 
 interface WordModalProps {
   entry: IDictionaryEntry;
@@ -14,10 +19,41 @@ interface WordModalProps {
 }
 
 function WordModal({ close, searchTerm, entry }: WordModalProps) {
+  let repo = useDatabaseRepo();
+  let removeFromFavoriteEntriesState = useSetAtom(
+    removeFromFavoriteEntriesAtom
+  );
+  let [starred, setStarred] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    repo.isEntryInFavorites(entry.id).then((inFavorites) => {
+      if (isMounted) setStarred(inFavorites);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [entry.id, repo]);
+
+  function handleAddToFavorites() {
+    repo.addEntryToFavorites(entry.id).then(() => setStarred(true));
+  }
+
+  function handleRemoveFromFavorites() {
+    repo.removeEntryFromFavorites(entry.id).then(() => {
+      removeFromFavoriteEntriesState(entry.id);
+      setStarred(false);
+    });
+  }
+
+  if (starred === null) return <Loader size="medium" />;
+
   return (
     <Modal onRequestClose={close}>
-      <View className="bg-brand px-5 py-4">
-        <TouchableOpacity onPress={close} className="items-end">
+      <View className="flex-row-reverse justify-between bg-brand px-5 py-4">
+        <TouchableOpacity onPress={close}>
           <Icon
             type="MaterialIcons"
             name="arrow-back"
@@ -25,6 +61,20 @@ function WordModal({ close, searchTerm, entry }: WordModalProps) {
             color="white"
           />
         </TouchableOpacity>
+        {starred ? (
+          <TouchableOpacity onPress={handleRemoveFromFavorites}>
+            <Icon type="MaterialIcons" name="star" size={24} color="#fff085" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={handleAddToFavorites}>
+            <Icon
+              type="MaterialIcons"
+              name="star-border"
+              size={24}
+              color="white"
+            />
+          </TouchableOpacity>
+        )}
       </View>
       <ScrollView>
         <View className="">

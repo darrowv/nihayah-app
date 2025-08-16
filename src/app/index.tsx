@@ -1,11 +1,5 @@
-import { View } from "react-native";
+import { Redirect } from "expo-router";
 
-import HistoryList from "@/components/HistoryList";
-
-export default function Home() {
-  return (
-    <View className="flex-1 bg-white">
-      <HistoryList />
-    </View>
-  );
+export default function Index() {
+  return <Redirect href="/history" />;
 }

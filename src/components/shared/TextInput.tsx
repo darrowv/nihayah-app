@@ -14,7 +14,7 @@ export const TextInput = forwardRef<DefaultTextInput, TextInputProps>(
       <DefaultTextInput
         {...props}
         ref={ref}
-        className={`h-14 rounded-xl bg-white px-3 py-1 text-right ${props.className || ""}`}
+        className={`h-14 bg-white px-3 py-1 text-right ${props.className || ""}`}
         style={[
           props.style,
           {

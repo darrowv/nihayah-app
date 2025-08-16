@@ -1,11 +1,12 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-import { IDictionaryEntry, IHistoryEntry } from "./interfaces";
+import { IDictionaryEntry, IFavoriteEntry, IHistoryEntry } from "./interfaces";
 import { normalizeArabic } from "./utils/normalizeArabic";
 
 export class DatabaseRepository {
   constructor(private db: SQLiteDatabase) {}
 
+  // dictionary entries methods
   async searchDictEntries(searchTerm: string) {
     let normalizedSearchTerm = normalizeArabic(searchTerm);
     let value = `%${normalizedSearchTerm}%`;
@@ -37,6 +38,7 @@ export class DatabaseRepository {
     return filteredEntries as IDictionaryEntry[];
   }
 
+  // history methods
   async addEntryToHistory(entryId: number) {
     await this.db.runAsync(
       `
@@ -71,5 +73,54 @@ export class DatabaseRepository {
     );
 
     return entries as IHistoryEntry[];
+  }
+
+  // favorites methods
+  async getDictEntriesFromFavorites() {
+    const entries = await this.db.getAllAsync(
+      `
+      SELECT de.*, f.entry_id
+      FROM favorites f
+      JOIN dictionary_entries de ON de.id = f.entry_id
+      ORDER BY de.word COLLATE NOCASE
+      `
+    );
+
+    return entries as IFavoriteEntry[];
+  }
+
+  async addEntryToFavorites(entryId: number) {
+    await this.db.runAsync(
+      `
+      INSERT INTO favorites (entry_id)
+      VALUES (?)
+      ON CONFLICT(entry_id) DO NOTHING;
+      `,
+      entryId
+    );
+  }
+
+  async removeEntryFromFavorites(entryId: number) {
+    await this.db.runAsync(
+      `
+      DELETE FROM favorites
+      WHERE entry_id = ?;
+      `,
+      entryId
+    );
+  }
+
+  async isEntryInFavorites(entryId: number) {
+    const result = await this.db.getAllAsync(
+      `
+      SELECT 1
+      FROM favorites
+      WHERE entry_id = ?
+      LIMIT 1;
+      `,
+      [entryId]
+    );
+
+    return result.length > 0;
   }
 }

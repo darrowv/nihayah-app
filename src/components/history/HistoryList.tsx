@@ -3,22 +3,20 @@ import { FlatList, View } from "react-native";
 import { useAtom } from "jotai";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
-import { IDictionaryEntry } from "@/lib/interfaces";
+import { IHistoryEntry } from "@/lib/interfaces";
 import { historyEntriesAtom } from "@/lib/atoms";
 
-import Text from "./shared/Text";
-import WordModal from "./WordModal";
-import Loader from "./shared/Loader";
-import Separator from "./shared/Separator";
+import Text from "../shared/Text";
+import WordModal from "../WordModal";
+import Loader from "../shared/Loader";
 import HistoryListItem from "./HistoryListItem";
+import EmptyList from "../EmptyList";
 
 function HistoryList() {
   let repo = useDatabaseRepo();
   let [historyEntries, setHistoryEntries] = useAtom(historyEntriesAtom);
   let [loading, setLoading] = useState(false);
-  let [selectedEntry, setSelectedEntry] = useState<IDictionaryEntry | null>(
-    null
-  );
+  let [selectedEntry, setSelectedEntry] = useState<IHistoryEntry | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -40,12 +38,12 @@ function HistoryList() {
   return (
     <FlatList
       data={historyEntries}
+      ListEmptyComponent={<EmptyList text="لا توجد كلمات في السجل بعد" />}
       ListHeaderComponent={
         <View>
-          <Text className="px-4 py-3 text-lg text-gray-400">
-            تاريخ الكلمات التي تمت مشاهدتها
+          <Text className="mt-4 p-4 text-xl text-gray-500">
+            الكلمات التي شاهدتها
           </Text>
-          <Separator />
         </View>
       }
       renderItem={({ item }) => (

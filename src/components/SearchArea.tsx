@@ -27,7 +27,7 @@ function SearchArea() {
 
     switch (option) {
       case "history":
-        router.push("/");
+        router.push("/history");
         break;
       case "favorites":
         router.push("/favorites");
@@ -65,7 +65,7 @@ function SearchArea() {
           <Icon type="MaterialIcons" name="search" size={24} color="#4a5565" />
         </TouchableOpacity>
         <TextInput
-          className="my-1 pl-12 text-xl"
+          className="my-1 rounded-2xl pl-12 text-xl"
           placeholder="ابدأ بكتابة الكلمة"
           maxLength={30}
           value={searchTerm}
