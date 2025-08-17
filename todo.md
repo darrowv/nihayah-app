@@ -11,6 +11,10 @@ Features:
 [+] Implement favorite entries feature
 [+] Highlight searched terms in dict entries
 
+Tasks:
+[ ] Refactor HighlightedText component
+[ ] Improve SearchArea design
+
 ## To consider in future:
 
 - Footnotes

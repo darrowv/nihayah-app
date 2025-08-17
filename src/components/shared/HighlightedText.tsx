@@ -131,7 +131,7 @@ function HighlightedText({
     const normalizedEnd = match.index + match[0].length;
 
     // find original start position
-    let originalStart = -1;
+    let originalStart = 0;
     for (let i = 0; i < positionMap.length; i++) {
       if (positionMap[i] === normalizedStart) {
         originalStart = i;
@@ -146,6 +146,24 @@ function HighlightedText({
         originalEnd = i;
         break;
       }
+    }
+
+    // FIXED: First, adjust start to skip any leading diacritics that don't belong to the search term
+    // Move start forward to skip diacritics that come before the actual base characters
+    while (
+      originalStart < originalEnd &&
+      DIACRITICS_REGEX.test(text[originalStart]) &&
+      normalizeArabic(text[originalStart]) === ""
+    ) {
+      originalStart++;
+    }
+
+    // Then expand end forwards to include any diacritics *after* the last base char of the search term
+    while (
+      originalEnd < text.length &&
+      DIACRITICS_REGEX.test(text[originalEnd])
+    ) {
+      originalEnd++;
     }
 
     if (originalStart !== -1) {

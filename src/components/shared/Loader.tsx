@@ -31,7 +31,7 @@ const Loader = ({ size = "medium" }: LoaderProps) => {
   return (
     <View className="flex-1 items-center justify-center">
       <Animated.View
-        className={`border-b-slate-200 border-l-brand border-r-slate-200 border-t-slate-200 ${sizes[size]}`}
+        className={`border-l-brand border-b-slate-200 border-r-slate-200 border-t-slate-200 ${sizes[size]}`}
         style={animatedStyle}
       />
     </View>

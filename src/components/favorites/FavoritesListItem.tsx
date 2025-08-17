@@ -16,7 +16,7 @@ function FavoritesListItem({ entry, handlePress }: FavoritesListItemProps) {
   return (
     <Pressable
       onPress={handlePress}
-      className="mx-3 mb-3 flex-row-reverse items-center justify-between rounded-2xl bg-white py-4 pe-2 ps-4 shadow-lg active:scale-95"
+      className="mx-3 mb-3 flex-row-reverse items-center justify-between rounded-2xl border-2 border-white bg-gray-50 py-2.5 pe-2 ps-4 shadow-lg active:scale-95"
     >
       <Icon
         type="MaterialIcons"
@@ -25,7 +25,7 @@ function FavoritesListItem({ entry, handlePress }: FavoritesListItemProps) {
         color="#9ca3af"
       />
       <View className="me-4 flex-1 gap-3">
-        <Text weight="semibold" className="py-2 text-2xl text-red-700">
+        <Text weight="semibold" className="py-2 text-2xl text-blue-950">
           {word}
         </Text>
         <Text className="line-clamp-1 text-base text-gray-400">

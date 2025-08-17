@@ -8,7 +8,6 @@ import { removeFromFavoriteEntriesAtom } from "@/lib/atoms";
 
 import Text from "./shared/Text";
 import Icon from "./shared/Icon";
-import Separator from "./shared/Separator";
 import HighlightedText from "./shared/HighlightedText";
 import Loader from "./shared/Loader";
 
@@ -51,47 +50,49 @@ function WordModal({ close, searchTerm, entry }: WordModalProps) {
   if (starred === null) return <Loader size="medium" />;
 
   return (
-    <Modal onRequestClose={close}>
-      <View className="flex-row-reverse justify-between bg-brand px-5 py-4">
+    <Modal onRequestClose={close} transparent>
+      <View className="flex-row-reverse justify-between bg-brand px-5 py-6">
         <TouchableOpacity onPress={close}>
           <Icon
             type="MaterialIcons"
             name="arrow-back"
-            size={24}
+            size={28}
             color="white"
           />
         </TouchableOpacity>
         {starred ? (
           <TouchableOpacity onPress={handleRemoveFromFavorites}>
-            <Icon type="MaterialIcons" name="star" size={24} color="#fff085" />
+            <Icon type="MaterialIcons" name="star" size={28} color="#fff085" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={handleAddToFavorites}>
             <Icon
               type="MaterialIcons"
               name="star-border"
-              size={24}
+              size={28}
               color="white"
             />
           </TouchableOpacity>
         )}
       </View>
       <ScrollView>
-        <View className="">
-          <Text weight="semibold" className="px-5 py-4 text-2xl text-red-700">
+        <View className="bg-background">
+          <Text
+            weight="semibold"
+            className="px-4 pb-2 pt-6 text-2xl text-blue-950"
+          >
             {entry.word}
           </Text>
-          <Separator />
 
           {searchTerm ? (
             <HighlightedText
               searchTerm={searchTerm}
               text={entry.explanation}
-              containerTextClassName="px-3 py-3 text-xl/10"
-              highlightClassName="bg-yellow-200 text-brand"
+              containerTextClassName="px-4 py-3 text-xl/10"
+              highlightClassName="bg-yellow-100 text-red-700"
             />
           ) : (
-            <Text className="px-3 py-3 text-xl/10">{entry.explanation}</Text>
+            <Text className="px-4 py-3 text-xl/10">{entry.explanation}</Text>
           )}
         </View>
       </ScrollView>

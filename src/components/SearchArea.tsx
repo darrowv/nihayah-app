@@ -41,12 +41,12 @@ function SearchArea() {
   }
 
   return (
-    <View className="flex-row-reverse items-center justify-between gap-2 bg-brand px-3 py-3">
+    <View className="bg-brand flex-row-reverse items-center justify-between gap-1 px-3 py-3">
       <TouchableOpacity onPress={() => setDotsMenuOpened(true)}>
         <Icon
           type="MaterialCommunityIcons"
           name="dots-vertical"
-          size={24}
+          size={26}
           color="white"
         />
 
@@ -65,7 +65,7 @@ function SearchArea() {
           <Icon type="MaterialIcons" name="search" size={24} color="#4a5565" />
         </TouchableOpacity>
         <TextInput
-          className="my-1 rounded-2xl pl-12 text-xl"
+          className="my-1 rounded-full pl-12 text-xl"
           placeholder="ابدأ بكتابة الكلمة"
           maxLength={30}
           value={searchTerm}

@@ -45,8 +45,8 @@ export default function Layout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#90343d" }}>
-        <StatusBar backgroundColor="#90343d" barStyle="light-content" />
+      <SafeAreaView className="bg-brand flex-1">
+        <StatusBar backgroundColor="#2C3E50" barStyle="light-content" />
         <Suspense
           fallback={
             <View className="flex-1 items-center justify-center bg-white">

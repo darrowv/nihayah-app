@@ -1,11 +1,10 @@
-import { View } from "react-native";
-
 import ResultsList from "@/components/results/ResultsList";
+import ScreenWrapper from "@/components/shared/ScreenWrapper";
 
 export default function Results() {
   return (
-    <View className="flex-1 bg-[#f9fafb]">
+    <ScreenWrapper>
       <ResultsList />
-    </View>
+    </ScreenWrapper>
   );
 }

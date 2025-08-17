@@ -1,11 +1,10 @@
-import { View } from "react-native";
-
 import FavoritesList from "@/components/favorites/FavoritesList";
+import ScreenWrapper from "@/components/shared/ScreenWrapper";
 
 export default function Favorites() {
   return (
-    <View className="flex-1 bg-[#f9fafb]">
+    <ScreenWrapper>
       <FavoritesList />
-    </View>
+    </ScreenWrapper>
   );
 }

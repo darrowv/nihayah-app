@@ -1,11 +1,10 @@
-import { View } from "react-native";
-
 import HistoryList from "@/components/history/HistoryList";
+import ScreenWrapper from "@/components/shared/ScreenWrapper";
 
 export default function History() {
   return (
-    <View className="flex-1 bg-[#f9fafb]">
+    <ScreenWrapper>
       <HistoryList />
-    </View>
+    </ScreenWrapper>
   );
 }
