@@ -15,4 +15,5 @@ export interface IHistoryEntry extends IDictionaryEntry {
 
 export interface IFavoriteEntry extends IDictionaryEntry {
   entry_id: number;
+  added_at: string;
 }

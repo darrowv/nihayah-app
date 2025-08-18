@@ -1,25 +1,20 @@
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { useAtom } from "jotai";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
-import { IDictionaryEntry } from "@/lib/interfaces";
 import { searchResultsAtom } from "@/lib/atoms";
 
 import Text from "../shared/Text";
-import WordModal from "../WordModal";
 import ResultsListItem from "./ResultsListItem";
 import Loader from "../shared/Loader";
 import EmptyList from "../EmptyList";
 
 function ResultsList() {
   let repo = useDatabaseRepo();
+  let router = useRouter();
   let [searchResults, setSearchResults] = useAtom(searchResultsAtom);
-
-  let [selectedEntry, setSelectedEntry] = useState<IDictionaryEntry | null>(
-    null
-  );
   let [loadingResults, setLoadingResults] = useState(false);
 
   let params = useLocalSearchParams<{ searchTerm: string }>();
@@ -33,17 +28,14 @@ function ResultsList() {
     });
   }, [searchTerm, repo, setSearchResults]);
 
-  if (loadingResults) return <Loader size="medium" />;
+  let handleRedirect = (entryId: number) => {
+    router.push({
+      pathname: "/word/[entryId]",
+      params: { entryId, searchTerm },
+    });
+  };
 
-  if (selectedEntry) {
-    return (
-      <WordModal
-        close={() => setSelectedEntry(null)}
-        searchTerm={searchTerm}
-        entry={selectedEntry}
-      />
-    );
-  }
+  if (loadingResults) return <Loader size="medium" />;
 
   return (
     <FlatList
@@ -63,7 +55,7 @@ function ResultsList() {
           entry={item}
           handlePress={() => {
             repo.addEntryToHistory(item.id);
-            setSelectedEntry(item);
+            handleRedirect(item.id);
           }}
         />
       )}

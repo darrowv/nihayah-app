@@ -11,7 +11,7 @@ interface ResultsListItemProps {
 }
 
 function ResultsListItem({ entry, handlePress }: ResultsListItemProps) {
-  const { word, explanation } = entry;
+  let { word, explanation } = entry;
 
   return (
     <Pressable

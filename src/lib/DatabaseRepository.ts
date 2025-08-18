@@ -7,6 +7,18 @@ export class DatabaseRepository {
   constructor(private db: SQLiteDatabase) {}
 
   // dictionary entries methods
+  async getDictEntryById(entryId: number) {
+    let entry = await this.db.getFirstAsync(
+      `
+        SELECT * FROM dictionary_entries
+        WHERE id = ?
+      `,
+      [entryId]
+    );
+
+    return entry as IDictionaryEntry;
+  }
+
   async searchDictEntries(searchTerm: string) {
     let normalizedSearchTerm = normalizeArabic(searchTerm);
     let value = `%${normalizedSearchTerm}%`;
@@ -65,7 +77,7 @@ export class DatabaseRepository {
   async getDictEntriesFromHistory() {
     const entries = await this.db.getAllAsync(
       `
-      SELECT de.*, h.viewed_at
+      SELECT de.*, h.viewed_at, h.entry_id
       FROM history h
       JOIN dictionary_entries de ON de.id = h.entry_id
       ORDER BY h.viewed_at DESC
@@ -79,10 +91,10 @@ export class DatabaseRepository {
   async getDictEntriesFromFavorites() {
     const entries = await this.db.getAllAsync(
       `
-      SELECT de.*, f.entry_id
+      SELECT de.*, f.added_at, f.entry_id
       FROM favorites f
       JOIN dictionary_entries de ON de.id = f.entry_id
-      ORDER BY de.word COLLATE NOCASE
+      ORDER BY de.added_at DESC
       `
     );
 

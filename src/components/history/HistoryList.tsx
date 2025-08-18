@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
-import { IHistoryEntry } from "@/lib/interfaces";
 import { historyEntriesAtom } from "@/lib/atoms";
 
 import Text from "../shared/Text";
-import WordModal from "../WordModal";
 import Loader from "../shared/Loader";
 import HistoryListItem from "./HistoryListItem";
 import EmptyList from "../EmptyList";
 
 function HistoryList() {
   let repo = useDatabaseRepo();
+  let router = useRouter();
   let [historyEntries, setHistoryEntries] = useAtom(historyEntriesAtom);
   let [loading, setLoading] = useState(false);
-  let [selectedEntry, setSelectedEntry] = useState<IHistoryEntry | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -27,13 +26,11 @@ function HistoryList() {
       .finally(() => setLoading(false));
   }, [repo, setHistoryEntries]);
 
-  if (loading) return <Loader size="medium" />;
+  let handleRedirect = (entryId: number) => {
+    router.push(`/word/${entryId}`);
+  };
 
-  if (selectedEntry) {
-    return (
-      <WordModal close={() => setSelectedEntry(null)} entry={selectedEntry} />
-    );
-  }
+  if (loading) return <Loader size="medium" />;
 
   return (
     <FlatList
@@ -49,7 +46,7 @@ function HistoryList() {
       renderItem={({ item }) => (
         <HistoryListItem
           entry={item}
-          handlePress={() => setSelectedEntry(item)}
+          handlePress={() => handleRedirect(item.entry_id)}
         />
       )}
     />

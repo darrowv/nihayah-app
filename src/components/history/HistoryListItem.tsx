@@ -11,7 +11,7 @@ interface HistoryListItemProps {
 }
 
 function HistoryListItem({ entry, handlePress }: HistoryListItemProps) {
-  const { word, explanation } = entry;
+  let { word, explanation } = entry;
 
   return (
     <Pressable

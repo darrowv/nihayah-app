@@ -14,7 +14,6 @@ import {
 } from "@expo-google-fonts/noto-sans-arabic";
 
 import Loader from "@/components/shared/Loader";
-import SearchArea from "@/components/SearchArea";
 
 export default function Layout() {
   let [fontLoaded, fontError] = useFonts({
@@ -45,12 +44,12 @@ export default function Layout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView className="bg-brand flex-1">
+      <SafeAreaView className="flex-1 bg-brand">
         <StatusBar backgroundColor="#2C3E50" barStyle="light-content" />
         <Suspense
           fallback={
             <View className="flex-1 items-center justify-center bg-white">
-              <Loader size="large" />
+              <Loader size="medium" />
             </View>
           }
         >
@@ -59,13 +58,15 @@ export default function Layout() {
             assetSource={{ assetId: require("../../assets/nihayah.db") }}
             useSuspense
           >
-            <SearchArea />
-
             <Stack screenOptions={{ headerShown: false, animation: "none" }}>
               <Stack.Screen name="index" />
               <Stack.Screen name="history" />
               <Stack.Screen name="favorites" />
               <Stack.Screen name="results" />
+              <Stack.Screen
+                name="word/[entryId]"
+                options={{ animation: "slide_from_left" }}
+              />
             </Stack>
           </SQLiteProvider>
         </Suspense>

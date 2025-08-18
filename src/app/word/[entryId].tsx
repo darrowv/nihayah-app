@@ -1,40 +1,46 @@
 import { useEffect, useState } from "react";
-import { Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSetAtom } from "jotai";
 
+import Text from "@/components/shared/Text";
+import ScreenWrapper from "@/components/shared/ScreenWrapper";
 import { IDictionaryEntry } from "@/lib/interfaces";
+import Loader from "@/components/shared/Loader";
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { removeFromFavoriteEntriesAtom } from "@/lib/atoms";
+import Icon from "@/components/shared/Icon";
+import HighlightedText from "@/components/shared/HighlightedText";
 
-import Text from "./shared/Text";
-import Icon from "./shared/Icon";
-import HighlightedText from "./shared/HighlightedText";
-import Loader from "./shared/Loader";
-
-interface WordModalProps {
-  entry: IDictionaryEntry;
-  searchTerm?: string;
-  close: () => void;
-}
-
-function WordModal({ close, searchTerm, entry }: WordModalProps) {
+export default function WordScreen() {
   let repo = useDatabaseRepo();
+  let router = useRouter();
+
   let removeFromFavoriteEntriesState = useSetAtom(
     removeFromFavoriteEntriesAtom
   );
+  let [entry, setEntry] = useState<IDictionaryEntry | null>(null);
   let [starred, setStarred] = useState<boolean | null>(null);
+
+  let { entryId, searchTerm } = useLocalSearchParams<{
+    entryId: string;
+    searchTerm?: string;
+  }>();
 
   useEffect(() => {
     let isMounted = true;
 
-    repo.isEntryInFavorites(entry.id).then((inFavorites) => {
-      if (isMounted) setStarred(inFavorites);
+    repo.getDictEntryById(Number(entryId)).then((res) => {
+      setEntry(res);
+      repo.isEntryInFavorites(res.id).then((inFavorites) => {
+        if (isMounted) setStarred(inFavorites);
+      });
     });
 
     return () => {
       isMounted = false;
     };
-  }, [entry.id, repo]);
+  }, [repo, entryId]);
 
   function handleAddToFavorites() {
     repo.addEntryToFavorites(entry.id).then(() => setStarred(true));
@@ -47,12 +53,12 @@ function WordModal({ close, searchTerm, entry }: WordModalProps) {
     });
   }
 
-  if (starred === null) return <Loader size="medium" />;
+  if (entry === null) return <Loader size="medium" />;
 
   return (
-    <Modal onRequestClose={close} transparent>
-      <View className="flex-row-reverse justify-between bg-brand px-5 py-6">
-        <TouchableOpacity onPress={close}>
+    <ScreenWrapper>
+      <View className="h-20 flex-row-reverse justify-between bg-brand px-5 py-6">
+        <TouchableOpacity onPress={() => router.back()}>
           <Icon
             type="MaterialIcons"
             name="arrow-back"
@@ -96,8 +102,6 @@ function WordModal({ close, searchTerm, entry }: WordModalProps) {
           )}
         </View>
       </ScrollView>
-    </Modal>
+    </ScreenWrapper>
   );
 }
-
-export default WordModal;
