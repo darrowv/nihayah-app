@@ -1,17 +1,35 @@
 import { Pressable, View } from "react-native";
 
-import { IDictionaryEntry } from "@/lib/interfaces";
+import { IResultsEntry } from "@/lib/interfaces";
 
 import Icon from "../shared/Icon";
 import Text from "../shared/Text";
 
 interface ResultsListItemProps {
-  entry: IDictionaryEntry;
+  entry: IResultsEntry;
   handlePress: () => void;
 }
 
 function ResultsListItem({ entry, handlePress }: ResultsListItemProps) {
-  let { word, explanation } = entry;
+  let { word, explanation, match_type } = entry;
+
+  if (match_type === "explanation") {
+    return (
+      <Pressable
+        onPress={handlePress}
+        className="flex-row-reverse items-center justify-between border-b-2 border-blue-100 bg-white py-4 pe-2 ps-5 shadow-sm active:scale-95"
+      >
+        <View className="me-4 flex-1 gap-1">
+          <Text weight="medium" className="py-2 text-xl text-blue-950">
+            {word}
+          </Text>
+          <Text className="line-clamp-1 text-base text-gray-400">
+            {explanation.substring(0, 100)}
+          </Text>
+        </View>
+      </Pressable>
+    );
+  }
 
   return (
     <Pressable

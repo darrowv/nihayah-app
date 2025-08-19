@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 
-import { IDictionaryEntry, IFavoriteEntry, IHistoryEntry } from "./interfaces";
+import { IFavoriteEntry, IHistoryEntry, IResultsEntry } from "./interfaces";
 
-export let searchResultsAtom = atom<IDictionaryEntry[]>([]);
+export let searchResultsAtom = atom<IResultsEntry[]>([]);
 
 export let historyEntriesAtom = atom<IHistoryEntry[]>([]);
 

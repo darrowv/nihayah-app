@@ -8,6 +8,10 @@ export interface IDictionaryEntry {
   volume_number: number;
 }
 
+export interface IResultsEntry extends IDictionaryEntry {
+  match_type: "word" | "explanation";
+}
+
 export interface IHistoryEntry extends IDictionaryEntry {
   entry_id: number;
   viewed_at: string;

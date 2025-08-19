@@ -1,6 +1,11 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
-import { IDictionaryEntry, IFavoriteEntry, IHistoryEntry } from "./interfaces";
+import {
+  IDictionaryEntry,
+  IFavoriteEntry,
+  IHistoryEntry,
+  IResultsEntry,
+} from "./interfaces";
 import { normalizeArabic } from "./utils/normalizeArabic";
 
 export class DatabaseRepository {
@@ -21,33 +26,45 @@ export class DatabaseRepository {
 
   async searchDictEntries(searchTerm: string) {
     let normalizedSearchTerm = normalizeArabic(searchTerm);
-    let value = `%${normalizedSearchTerm}%`;
+    let likeValue = `%${normalizedSearchTerm}%`;
 
-    let filteredEntries = await this.db.getAllAsync(
+    let results = await this.db.getAllAsync(
       `
-        SELECT * FROM dictionary_entries
-        WHERE word_clean LIKE ? OR explanation_clean LIKE ?
-        ORDER BY
-          CASE
-            WHEN word_clean = ? THEN 1             -- exact match
-            WHEN word_clean LIKE ? THEN 2          -- starts with
-            WHEN word_clean LIKE ? THEN 3          -- contains
-            WHEN explanation_clean LIKE ? THEN 4   -- found in explanation
-            ELSE 5
-          END,
-          word_clean ASC
-        `,
+      SELECT *,
+        CASE
+          WHEN word_clean LIKE ? THEN 'word'
+          ELSE 'explanation'
+        END AS match_type
+      FROM dictionary_entries
+      WHERE word_clean LIKE ?
+         OR explanation_clean LIKE ?
+      ORDER BY
+        CASE
+          -- Word matches first
+          WHEN word_clean = ? THEN 1
+          WHEN word_clean LIKE ? THEN 2
+          WHEN word_clean LIKE ? THEN 3
+          -- Explanation matches last
+          ELSE 4
+        END,
+        word_clean ASC
+      `,
       [
-        value, // word_clean LIKE ?
-        value, // explanation_clean LIKE ?
-        normalizedSearchTerm, // word_clean = ?
-        normalizedSearchTerm + "%", // word_clean LIKE 'input%'
-        "%" + normalizedSearchTerm + "%", // word_clean LIKE '%input%'
-        "%" + normalizedSearchTerm + "%", // explanation_clean LIKE '%input%'
+        // CASE for match_type
+        likeValue,
+
+        // WHERE clause
+        likeValue,
+        likeValue,
+
+        // ORDER BY priorities
+        normalizedSearchTerm, // exact match
+        normalizedSearchTerm + "%", // prefix match
+        likeValue, // contains match
       ]
     );
 
-    return filteredEntries as IDictionaryEntry[];
+    return results as IResultsEntry[];
   }
 
   // history methods
@@ -75,7 +92,7 @@ export class DatabaseRepository {
   }
 
   async getDictEntriesFromHistory() {
-    const entries = await this.db.getAllAsync(
+    let entries = await this.db.getAllAsync(
       `
       SELECT de.*, h.viewed_at, h.entry_id
       FROM history h
@@ -89,7 +106,7 @@ export class DatabaseRepository {
 
   // favorites methods
   async getDictEntriesFromFavorites() {
-    const entries = await this.db.getAllAsync(
+    let entries = await this.db.getAllAsync(
       `
       SELECT de.*, f.added_at, f.entry_id
       FROM favorites f
@@ -123,7 +140,7 @@ export class DatabaseRepository {
   }
 
   async isEntryInFavorites(entryId: number) {
-    const result = await this.db.getAllAsync(
+    let result = await this.db.getAllAsync(
       `
       SELECT 1
       FROM favorites
