@@ -82,24 +82,23 @@ export default function WordScreen() {
         )}
       </View>
       <ScrollView>
-        <View className="bg-background">
-          <Text
-            weight="semibold"
-            className="px-4 pb-2 pt-6 text-2xl text-blue-950"
-          >
+        <View className="bg-background px-4">
+          <Text weight="semibold" className="pb-2 pt-6 text-2xl text-blue-950">
             {entry.word}
           </Text>
 
-          {searchTerm ? (
-            <HighlightedText
-              searchTerm={searchTerm}
-              text={entry.explanation}
-              containerTextClassName="px-4 py-3 text-xl/10"
-              highlightClassName="bg-yellow-100 text-red-700"
-            />
-          ) : (
-            <Text className="px-4 py-3 text-xl/10">{entry.explanation}</Text>
-          )}
+          <View className="py-3">
+            {searchTerm ? (
+              <HighlightedText
+                searchTerm={searchTerm}
+                text={entry.explanation}
+                cleanText={entry.explanation_clean}
+                highlightClassName="bg-yellow-100 text-red-700"
+              />
+            ) : (
+              <Text className="text-xl/10">{entry.explanation}</Text>
+            )}
+          </View>
         </View>
       </ScrollView>
     </ScreenWrapper>
