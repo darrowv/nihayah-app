@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Alert, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
+
+import { searchTermAtom } from "@/lib/atoms";
 
 import { TextInput } from "./shared/TextInput";
 import Icon from "./shared/Icon";
@@ -10,7 +13,7 @@ function SearchArea() {
   let [dotsMenuOpened, setDotsMenuOpened] = useState(false);
   let router = useRouter();
 
-  let [searchTerm, setSearchTerm] = useState("");
+  let [searchTerm, setSearchTerm] = useAtom(searchTermAtom);
 
   function handleSubmitWord() {
     if (searchTerm.length < 2) {
@@ -19,25 +22,6 @@ function SearchArea() {
     }
 
     router.push({ pathname: "/results", params: { searchTerm } });
-  }
-
-  function handleMenuOption(option: string) {
-    setDotsMenuOpened(false);
-    setSearchTerm("");
-
-    switch (option) {
-      case "history":
-        router.push("/history");
-        break;
-      case "favorites":
-        router.push("/favorites");
-        break;
-      case "about":
-        router.push("/about");
-        break;
-      default:
-        break;
-    }
   }
 
   return (
@@ -53,7 +37,6 @@ function SearchArea() {
         <DotsMenu
           visible={dotsMenuOpened}
           onClose={() => setDotsMenuOpened(false)}
-          onOptionPress={handleMenuOption}
         />
       </TouchableOpacity>
 

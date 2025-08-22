@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Share,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSetAtom } from "jotai";
 
@@ -53,6 +59,16 @@ export default function WordScreen() {
     });
   }
 
+  async function handleShare() {
+    try {
+      await Share.share({
+        message: `${entry.word}\n\n${entry.explanation}`,
+      });
+    } catch (error) {
+      console.log("Error sharing: ", error);
+    }
+  }
+
   if (entry === null) return <Loader size="medium" />;
 
   return (
@@ -66,28 +82,58 @@ export default function WordScreen() {
             color="white"
           />
         </TouchableOpacity>
-        {starred ? (
-          <TouchableOpacity onPress={handleRemoveFromFavorites}>
-            <Icon type="MaterialIcons" name="star" size={28} color="#fff085" />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={handleAddToFavorites}>
-            <Icon
-              type="MaterialIcons"
-              name="star-border"
-              size={28}
-              color="white"
-            />
-          </TouchableOpacity>
-        )}
       </View>
       <ScrollView>
-        <View className="bg-background px-4">
-          <Text weight="semibold" className="pb-2 pt-6 text-2xl text-blue-950">
-            {entry.word}
-          </Text>
+        <View>
+          <View className="mb-4 items-center justify-center gap-5 bg-teal-700 px-4 pb-8">
+            <Text
+              weight="semibold"
+              className="pt-10 text-center text-4xl text-white"
+            >
+              {entry.word}
+            </Text>
+            <View className="flex-row-reverse items-center gap-8">
+              {starred ? (
+                <Pressable
+                  className="rounded-full border-2 border-amber-300 p-0.5 active:scale-95 active:opacity-50"
+                  onPress={handleRemoveFromFavorites}
+                >
+                  <Icon
+                    type="MaterialIcons"
+                    name="star"
+                    size={26}
+                    color="#ffd230"
+                  />
+                </Pressable>
+              ) : (
+                <Pressable
+                  className="rounded-full border-2 border-white p-0.5 active:scale-95 active:opacity-50"
+                  onPress={handleAddToFavorites}
+                >
+                  <Icon
+                    type="MaterialIcons"
+                    name="star-border"
+                    size={26}
+                    color="white"
+                  />
+                </Pressable>
+              )}
 
-          <View className="py-3">
+              <Pressable
+                className="rounded-full border-2 border-white p-0.5 active:scale-95 active:opacity-50"
+                onPress={handleShare}
+              >
+                <Icon
+                  type="MaterialCommunityIcons"
+                  name="share"
+                  size={26}
+                  color="white"
+                />
+              </Pressable>
+            </View>
+          </View>
+
+          <View className="px-4 py-3">
             {searchTerm ? (
               <HighlightedText
                 searchTerm={searchTerm}

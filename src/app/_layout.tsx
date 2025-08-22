@@ -58,7 +58,12 @@ export default function Layout() {
             assetSource={{ assetId: require("../../assets/nihayah.db") }}
             useSuspense
           >
-            <Stack screenOptions={{ headerShown: false, animation: "none" }}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                animation: "fade",
+              }}
+            >
               <Stack.Screen name="index" />
               <Stack.Screen name="history" />
               <Stack.Screen name="favorites" />
