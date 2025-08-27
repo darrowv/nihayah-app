@@ -19,15 +19,15 @@ export default function About() {
             color="white"
           />
         </TouchableOpacity>
-        <Text className="py-1 text-2xl text-white">حول التطبيق</Text>
+        <Text className="text-arabic-2xl py-1 text-white">حول التطبيق</Text>
       </View>
 
       <ScrollView className="px-5 pt-6">
         <View className="gap-3 pb-7">
-          <Text weight="semibold" className="text-2xl text-blue-900">
+          <Text weight="semibold" className="text-arabic-2xl text-blue-900">
             عن الكتاب
           </Text>
-          <Text className="text-xl/8">
+          <Text className="text-arabic-xl">
             «النهاية في غريب الحديث والأثر» من أهم المعاجم التي جمعت ألفاظ غريب
             الحديث وشرحتها، صنّفه الإمام مجد الدين أبو السعادات المبارك بن محمد
             بن محمد بن محمد بن عبد الكريم الشيباني الجزري ابن الأثير (ت ٦٠٦هـ).
@@ -37,10 +37,10 @@ export default function About() {
         </View>
 
         <View className="gap-3 pb-7">
-          <Text weight="semibold" className="text-2xl text-blue-900">
+          <Text weight="semibold" className="text-arabic-2xl text-blue-900">
             عن المؤلف
           </Text>
-          <Text className="text-xl/8">
+          <Text className="text-arabic-xl">
             ابن الأثير مجد الدين من كبار علماء القرن السادس الهجري، جمع بين
             الفقه والحديث واللغة، واشتهر بكتبه التي خدمت التراث الإسلامي، وعلى
             رأسها هذا المعجم الفريد.
@@ -48,10 +48,10 @@ export default function About() {
         </View>
 
         <View className="gap-3 pb-7">
-          <Text weight="semibold" className="text-2xl text-blue-900">
+          <Text weight="semibold" className="text-arabic-2xl text-blue-900">
             عن التطبيق
           </Text>
-          <Text className="text-xl/8">
+          <Text className="text-arabic-xl">
             هدف هذا التطبيق هو تيسير البحث واستكشاف ألفاظ كتاب النهاية بطريقة
             سهلة وسريعة، ليكون أقرب إلى يد الطالب والباحث، مع واجهة عصرية تسهّل
             الوصول إلى المعاني والمصادر.

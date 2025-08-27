@@ -10,6 +10,7 @@ import Text from "../shared/Text";
 import Loader from "../shared/Loader";
 import HistoryListItem from "./HistoryListItem";
 import EmptyList from "../EmptyList";
+import Icon from "../shared/Icon";
 
 function HistoryList() {
   let repo = useDatabaseRepo();
@@ -37,8 +38,9 @@ function HistoryList() {
       data={historyEntries}
       ListEmptyComponent={<EmptyList text="لا توجد كلمات في السجل بعد" />}
       ListHeaderComponent={
-        <View>
-          <Text className="mt-4 p-4 text-xl text-gray-500">
+        <View className="mt-4 flex-row items-center gap-2 p-4">
+          <Icon type="MaterialIcons" name="history" size={22} color="#6b7280" />
+          <Text className="text-arabic-xl text-gray-500">
             الكلمات التي شاهدتها
           </Text>
         </View>

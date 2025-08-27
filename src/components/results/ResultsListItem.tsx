@@ -20,10 +20,10 @@ function ResultsListItem({ entry, handlePress }: ResultsListItemProps) {
         className="flex-row-reverse items-center justify-between border-b-2 border-blue-100 bg-white py-4 pe-2 ps-5 shadow-sm active:scale-95"
       >
         <View className="me-4 flex-1 gap-1">
-          <Text weight="medium" className="py-2 text-xl text-blue-950">
+          <Text weight="medium" className="text-arabic-xl py-2 text-blue-950">
             {word}
           </Text>
-          <Text className="line-clamp-1 text-base text-gray-400">
+          <Text className="text-arabic-base line-clamp-1 text-gray-400">
             {explanation.substring(0, 100)}
           </Text>
         </View>
@@ -43,10 +43,10 @@ function ResultsListItem({ entry, handlePress }: ResultsListItemProps) {
         color="#9ca3af"
       />
       <View className="me-4 flex-1 gap-3">
-        <Text weight="semibold" className="py-2 text-2xl text-blue-950">
+        <Text weight="semibold" className="text-arabic-2xl py-2 text-blue-950">
           {word}
         </Text>
-        <Text className="line-clamp-1 text-base text-gray-400">
+        <Text className="text-arabic-base line-clamp-1 text-gray-400">
           {explanation.substring(0, 100)}
         </Text>
       </View>

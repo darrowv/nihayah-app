@@ -48,7 +48,7 @@ function SearchArea() {
           <Icon type="MaterialIcons" name="search" size={24} color="#4a5565" />
         </TouchableOpacity>
         <TextInput
-          className="my-1 rounded-full pl-12 text-xl"
+          className="text-arabic-xl my-1 rounded-full pl-12"
           placeholder="ابدأ بكتابة الكلمة"
           maxLength={30}
           value={searchTerm}

@@ -10,6 +10,7 @@ import Text from "../shared/Text";
 import Loader from "../shared/Loader";
 import FavoritesListItem from "./FavoritesListItem";
 import EmptyList from "../EmptyList";
+import Icon from "../shared/Icon";
 
 function FavoritesList() {
   let repo = useDatabaseRepo();
@@ -37,8 +38,14 @@ function FavoritesList() {
       data={favoritesEntries}
       ListEmptyComponent={<EmptyList text="لا توجد كلمات في المفضلة بعد" />}
       ListHeaderComponent={
-        <View>
-          <Text className="mt-4 p-4 text-xl text-gray-500">كلماتك المفضلة</Text>
+        <View className="mt-4 flex-row items-center gap-2 p-4">
+          <Icon
+            type="MaterialIcons"
+            name="star-border"
+            size={22}
+            color="#6b7280"
+          />
+          <Text className="text-arabic-xl text-gray-500">كلماتك المفضلة</Text>
         </View>
       }
       renderItem={({ item }) => (

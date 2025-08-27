@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ImageBackground,
   Pressable,
   ScrollView,
   Share,
@@ -85,10 +86,13 @@ export default function WordScreen() {
       </View>
       <ScrollView>
         <View>
-          <View className="mb-4 items-center justify-center gap-5 bg-teal-700 px-4 pb-8">
+          <ImageBackground
+            source={require("../../../assets/images/word_background.png")}
+            className="items-center justify-center gap-5 bg-teal-700 px-4 pb-8"
+          >
             <Text
               weight="semibold"
-              className="pt-10 text-center text-4xl text-white"
+              className="text-arabic-4xl pt-10 text-center text-white"
             >
               {entry.word}
             </Text>
@@ -131,9 +135,9 @@ export default function WordScreen() {
                 />
               </Pressable>
             </View>
-          </View>
+          </ImageBackground>
 
-          <View className="px-4 py-3">
+          <View>
             {searchTerm ? (
               <HighlightedText
                 searchTerm={searchTerm}
@@ -142,7 +146,9 @@ export default function WordScreen() {
                 highlightClassName="bg-yellow-100 text-red-700"
               />
             ) : (
-              <Text className="text-xl/10">{entry.explanation}</Text>
+              <Text className="text-arabic-xl px-4 pb-4 pt-6 leading-10">
+                {entry.explanation}
+              </Text>
             )}
           </View>
         </View>

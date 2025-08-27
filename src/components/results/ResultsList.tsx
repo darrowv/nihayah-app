@@ -45,7 +45,7 @@ function ResultsList() {
       }
       ListHeaderComponent={
         <View>
-          <Text className="mt-4 p-4 text-xl text-gray-500">
+          <Text className="text-arabic-xl mt-4 p-4 text-gray-500">
             نتائج البحث : {searchResults.length}
           </Text>
         </View>

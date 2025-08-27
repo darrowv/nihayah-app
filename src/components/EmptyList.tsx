@@ -11,7 +11,7 @@ function EmptyList({ text }: EmtptyListProps) {
   return (
     <View className="mt-12 items-center gap-2">
       <Icon type="AntDesign" name="dropbox" size={50} color="#99a1af" />
-      <Text className="text-xl text-gray-400">{text}</Text>
+      <Text className="text-arabic-xl text-gray-400">{text}</Text>
     </View>
   );
 }

@@ -12,13 +12,14 @@ Features:
 [+] Favorite entries
 [+] Highlighting searched terms in dict entries
 [+] Word sharing in Word screen
+[ ] Font size adjusting in word screen
 
 Tasks:
 [+] Refactor HighlightedText component
 [+] Improve SearchArea design
+[+] Add gradient or image to word bg in Word screen
 [ ] Fix issues with parsing
 [ ] Test on IOS & Fix IOS specific issues
-[ ] Add gradient or image to word bg in Word screen
 
 ## To consider in future:
 

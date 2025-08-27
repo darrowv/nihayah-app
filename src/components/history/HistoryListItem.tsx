@@ -25,10 +25,10 @@ function HistoryListItem({ entry, handlePress }: HistoryListItemProps) {
         color="#9ca3af"
       />
       <View className="me-4 flex-1 gap-3">
-        <Text weight="semibold" className="py-2 text-2xl text-blue-950">
+        <Text weight="semibold" className="text-arabic-2xl py-2 text-blue-950">
           {word}
         </Text>
-        <Text className="line-clamp-1 text-base text-gray-400">
+        <Text className="text-arabic-base line-clamp-1 text-gray-400">
           {explanation.substring(0, 100)}
         </Text>
       </View>

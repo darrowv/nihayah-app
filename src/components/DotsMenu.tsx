@@ -47,7 +47,7 @@ function DotsMenu({ visible, onClose }: DotsMenuProps) {
             onPress={() => redirectToScreen("/history")}
           >
             <Icon type="MaterialIcons" name="history" size={18} />
-            <Text className="text-xl text-gray-800">السجل</Text>
+            <Text className="text-arabic-xl text-gray-800">السجل</Text>
           </TouchableOpacity>
           <Separator />
           <TouchableOpacity
@@ -55,7 +55,7 @@ function DotsMenu({ visible, onClose }: DotsMenuProps) {
             onPress={() => redirectToScreen("/favorites")}
           >
             <Icon type="MaterialIcons" name="star-border" size={18} />
-            <Text className="text-xl text-gray-800">المفضلة</Text>
+            <Text className="text-arabic-xl text-gray-800">المفضلة</Text>
           </TouchableOpacity>
           <Separator />
           <TouchableOpacity
@@ -63,7 +63,7 @@ function DotsMenu({ visible, onClose }: DotsMenuProps) {
             onPress={() => redirectToScreen("/about")}
           >
             <Icon type="MaterialIcons" name="info-outline" size={18} />
-            <Text className="text-xl text-gray-800">حول التطبيق</Text>
+            <Text className="text-arabic-xl text-gray-800">حول التطبيق</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
