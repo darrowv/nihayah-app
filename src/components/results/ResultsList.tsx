@@ -5,6 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { searchResultsAtom } from "@/lib/atoms";
+import { toArabicNumerals } from "@/lib/utils/toArabicNumerals";
 
 import Text from "../shared/Text";
 import ResultsListItem from "./ResultsListItem";
@@ -46,7 +47,7 @@ function ResultsList() {
       ListHeaderComponent={
         <View>
           <Text className="text-arabic-xl mt-4 p-4 text-gray-500">
-            نتائج البحث : {searchResults.length}
+            نتائج البحث: {toArabicNumerals(searchResults.length)}
           </Text>
         </View>
       }

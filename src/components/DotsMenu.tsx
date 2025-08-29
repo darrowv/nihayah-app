@@ -1,5 +1,9 @@
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity } from "react-native";
 import { usePathname, useRouter } from "expo-router";
+import Animated, {
+  LightSpeedInRight,
+  LightSpeedOutRight,
+} from "react-native-reanimated";
 import { useSetAtom } from "jotai";
 
 import { searchTermAtom } from "@/lib/atoms";
@@ -38,9 +42,11 @@ function DotsMenu({ visible, onClose }: DotsMenuProps) {
       onRequestClose={onClose}
     >
       <TouchableOpacity className="flex-1" activeOpacity={1} onPress={onClose}>
-        <View
+        <Animated.View
+          entering={LightSpeedInRight}
+          exiting={LightSpeedOutRight}
           className="absolute z-50 gap-2 space-y-2 rounded-lg bg-white py-2 shadow-2xl"
-          style={{ top: 60, right: 20 }}
+          style={{ top: 65, left: 20 }}
         >
           <TouchableOpacity
             className="flex-row items-center gap-2 py-1 pe-14 ps-4"
@@ -65,7 +71,7 @@ function DotsMenu({ visible, onClose }: DotsMenuProps) {
             <Icon type="MaterialIcons" name="info-outline" size={18} />
             <Text className="text-arabic-xl text-gray-800">حول التطبيق</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </TouchableOpacity>
     </Modal>
   );

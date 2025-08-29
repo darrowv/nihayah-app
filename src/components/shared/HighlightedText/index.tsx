@@ -17,7 +17,7 @@ function HighlightedText({
   highlightClassName,
 }: HighlightedTextProps) {
   if (!searchTerm) {
-    return <Text className="text-arabic-xl leading-10">{text}</Text>;
+    return <Text className="text-arabic-xl leading-[40px]">{text}</Text>;
   }
 
   // 1. normalize searchTerm
@@ -128,7 +128,7 @@ function HighlightedText({
   }
 
   return (
-    <Text className="text-arabic-xl px-4 pb-4 pt-6 leading-10">
+    <Text className="text-arabic-xl px-4 pb-4 pt-6 leading-[40px]">
       {parts.map((part) => {
         if (part.isHighlight) {
           return (

@@ -18,6 +18,7 @@ import { useDatabaseRepo } from "@/lib/hooks/useDatabaseRepo";
 import { removeFromFavoriteEntriesAtom } from "@/lib/atoms";
 import Icon from "@/components/shared/Icon";
 import HighlightedText from "@/components/shared/HighlightedText";
+import { toArabicNumerals } from "@/lib/utils/toArabicNumerals";
 
 export default function WordScreen() {
   let repo = useDatabaseRepo();
@@ -74,11 +75,11 @@ export default function WordScreen() {
 
   return (
     <ScreenWrapper>
-      <View className="h-20 flex-row-reverse justify-between bg-brand px-5 py-6">
+      <View className="h-20 flex-row items-center justify-between bg-brand px-5 py-6">
         <TouchableOpacity onPress={() => router.back()}>
           <Icon
             type="MaterialIcons"
-            name="arrow-back"
+            name="arrow-forward"
             size={28}
             color="white"
           />
@@ -146,10 +147,15 @@ export default function WordScreen() {
                 highlightClassName="bg-yellow-100 text-red-700"
               />
             ) : (
-              <Text className="text-arabic-xl px-4 pb-4 pt-6 leading-10">
+              <Text className="text-arabic-xl px-4 pt-6 leading-[40px]">
                 {entry.explanation}
               </Text>
             )}
+
+            <Text className="text-arabic-lg p-4 text-gray-500">
+              [ جزء: {toArabicNumerals(entry.volume_number)}، صفحة:{" "}
+              {toArabicNumerals(entry.page_number)} ]
+            </Text>
           </View>
         </View>
       </ScrollView>

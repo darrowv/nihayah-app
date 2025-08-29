@@ -26,20 +26,6 @@ function SearchArea() {
 
   return (
     <View className="h-20 flex-row-reverse items-center justify-between gap-1 bg-brand px-3 py-3">
-      <TouchableOpacity onPress={() => setDotsMenuOpened(true)}>
-        <Icon
-          type="MaterialCommunityIcons"
-          name="dots-vertical"
-          size={26}
-          color="white"
-        />
-
-        <DotsMenu
-          visible={dotsMenuOpened}
-          onClose={() => setDotsMenuOpened(false)}
-        />
-      </TouchableOpacity>
-
       <View className="flex-1 justify-center">
         <TouchableOpacity
           className="absolute start-3 top-1/2 z-10 flex-1 -translate-y-1/2 items-center justify-center"
@@ -57,6 +43,20 @@ function SearchArea() {
           onSubmitEditing={handleSubmitWord}
         />
       </View>
+
+      <TouchableOpacity onPress={() => setDotsMenuOpened(true)}>
+        <Icon
+          type="MaterialCommunityIcons"
+          name="dots-vertical"
+          size={26}
+          color="white"
+        />
+
+        <DotsMenu
+          visible={dotsMenuOpened}
+          onClose={() => setDotsMenuOpened(false)}
+        />
+      </TouchableOpacity>
     </View>
   );
 }

@@ -69,6 +69,10 @@ export default function Layout() {
               <Stack.Screen name="favorites" />
               <Stack.Screen name="results" />
               <Stack.Screen
+                name="about"
+                options={{ animation: "slide_from_left" }}
+              />
+              <Stack.Screen
                 name="word/[entryId]"
                 options={{ animation: "slide_from_left" }}
               />
